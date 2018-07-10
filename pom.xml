@@ -23,21 +23,64 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- Dependencies -->
-        <hesperides.version>0.0.4-SNAPSHOT</hesperides.version>
+        <hesperides.version>0.0.6-SNAPSHOT</hesperides.version>
         <!-- Plugins -->
+        <jackson.version>2.8.10</jackson.version>
+        <lombok.version>1.16.20</lombok.version>
+
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <!-- Hesperides -->
+        <dependency>
             <groupId>org.hesperides</groupId>
-            <artifactId>bootstrap</artifactId>
+            <artifactId>domain</artifactId>
             <version>${hesperides.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hesperides</groupId>
+            <artifactId>presentation</artifactId>
+            <version>${hesperides.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hesperides</groupId>
+            <artifactId>infrastructure</artifactId>
+            <version>${hesperides.version}</version>
+        </dependency>
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <!-- Axon -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

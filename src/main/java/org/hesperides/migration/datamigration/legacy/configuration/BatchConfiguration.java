@@ -1,4 +1,4 @@
-package org.hesperides.migration.datamigration;
+package org.hesperides.migration.datamigration.legacy.configuration;
 
 import lombok.extern.java.Log;
 import org.hesperides.migration.datamigration.legacy.entities.LegacyEvent;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Log
 @Configuration
-public class Conf {
+public class BatchConfiguration {
     @Value("${spring.redis.port}")
     private String redisPort;
     @Value("${spring.redis.host}")

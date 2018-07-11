@@ -5,7 +5,7 @@
 
     <groupId>org.hesperides.migration</groupId>
     <artifactId>data-migration</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${hesperides.version}</version>
     <packaging>jar</packaging>
 
     <name>hesperides-data-migration</name>
@@ -27,6 +27,7 @@
         <!-- Plugins -->
         <jackson.version>2.8.10</jackson.version>
         <lombok.version>1.16.20</lombok.version>
+        <axon.version>3.2.2</axon.version>
 
     </properties>
 
@@ -60,6 +61,7 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-spring-boot-starter</artifactId>
+            <version>${axon.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,18 +71,13 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
+            <version>${axon.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
     </dependencies>
 
     <build>

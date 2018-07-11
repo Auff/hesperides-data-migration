@@ -1,0 +1,20 @@
+language: kava
+jdk:
+  - oraclejdk8
+sudo: required
+service:
+  - docker
+#cache:
+#  directories:
+#  - "$HOME/.m2"
+#before_cache:
+stages:
+  - name: build
+#  - name: docker
+jobs:
+  include:
+  - stage: build
+    script: script: "./mvnw clean package -Dmaven.test.skip=true"
+#  - stage: docker
+#    if: branch = master AND fork = false
+#    script: "./.travis/docker_build_push.sh"

@@ -1,4 +1,4 @@
-package org.hesperides.migration.datamigration.token;//package org.hesperides.batch.token;
+package org.hesperides.migration.datamigration.legacy.configuration;//package org.hesperides.batch.token;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -7,22 +7,20 @@ import com.mongodb.ServerAddress;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Collections;
 
-@Component
+@Configuration
 @Getter
 @Setter
 @Validated
 @ConfigurationProperties("projection_repository")
-//@PropertySource("classpath:org/hesperides/application-mongoClient.yml")
-public class MongoTokenStoreConfiguration {
+public class MongoProjectionRepositoryConfiguration {
     @NotNull
     private String host;
     @NotNull
@@ -32,9 +30,8 @@ public class MongoTokenStoreConfiguration {
     private String password;
 
     @Bean
-    @Qualifier("token")
     public Mongo mongoClient() {
-        if (username.isEmpty()) {
+        if (!username.isEmpty()) {
             return new MongoClient(new ServerAddress(host, Integer.parseInt(port)), Collections.singletonList(MongoCredential.createCredential(username, database, password.toCharArray())));
         } else {
             return new MongoClient(host, Integer.parseInt(port));

@@ -1,12 +1,10 @@
 package org.hesperides.migration.datamigration.token;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Profile({"batch", "mongo"})
 @Repository
 public interface MongoTokenRepository extends MongoRepository<Token, String> {
 

@@ -2,6 +2,7 @@ package org.hesperides.migration.datamigration;
 
 
 import lombok.extern.java.Log;
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
 import org.hesperides.migration.datamigration.legacy.entities.LegacyEvent;
 import org.hesperides.migration.datamigration.service.AbstractMigrationService;
 import org.hesperides.migration.datamigration.service.ModuleMigrationService;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -26,25 +26,25 @@ import java.util.Set;
 
 @Log
 @Component
-@Profile("batch")
 public class BatchRunner {
 
-    private final MongoTokenRepository mongoTokenRepository;
-    private final MongoTemplate mongoTemplate;
     @Value("#{'${hesperides.batch.migration.resources}'.split(',')}")
     List<String> resources;
     @Value("${legacy.uri}")
     String LEGACY_URI;
     @Value("${refonte.uri}")
     String REFONTE_URI;
-//    private EmbeddedEventStore embeddedEventStore;
+
+    private final MongoTokenRepository mongoTokenRepository;
+    private final MongoTemplate mongoTemplate;
+    private EmbeddedEventStore embeddedEventStore;
 
 
     @Autowired
-    public BatchRunner(MongoTokenRepository mongoTokenRepository, MongoTemplate mongoTemplate) {
+    public BatchRunner(MongoTokenRepository mongoTokenRepository, MongoTemplate mongoTemplate, EmbeddedEventStore embeddedEventStore) {
         this.mongoTokenRepository = mongoTokenRepository;
         this.mongoTemplate = mongoTemplate;
-//        this.embeddedEventStore = embeddedEventStore;
+        this.embeddedEventStore = embeddedEventStore;
     }
 
     private ApplicationRunner titledRunner(String title, ApplicationRunner rr) {
@@ -85,12 +85,12 @@ public class BatchRunner {
             log.info(REFONTE_URI + " " + LEGACY_URI + " batchrunner");
             if (this.resources.contains("technos")) {
                 log.info("Migrate technos");
-                AbstractMigrationService migrateTechno = new TechnoMigrationService(restTemplate, legacyTemplate.opsForList(), mongoTokenRepository, LEGACY_URI, REFONTE_URI);
+                AbstractMigrationService migrateTechno = new TechnoMigrationService(restTemplate, legacyTemplate.opsForList(), mongoTokenRepository, embeddedEventStore, LEGACY_URI, REFONTE_URI);
                 migrateTechno.migrate(technoList);
             }
             if (this.resources.contains("modules")) {
                 log.info("Migrate modules");
-                AbstractMigrationService migrateModule = new ModuleMigrationService(restTemplate, legacyTemplate.opsForList(), mongoTokenRepository, LEGACY_URI, REFONTE_URI);
+                AbstractMigrationService migrateModule = new ModuleMigrationService(restTemplate, legacyTemplate.opsForList(), mongoTokenRepository, embeddedEventStore, LEGACY_URI, REFONTE_URI);
                 migrateModule.migrate(moduleList);
             }
 //            if (this.resources.contains("platforms")) {

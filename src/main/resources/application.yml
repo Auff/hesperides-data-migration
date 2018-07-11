@@ -1,8 +1,12 @@
-hesperides.batch.migration.resources: ${MIGRATION_RESOURCES:technos,modules}
 spring:
   redis:
     host: ${REDIS_HOST:10.98.208.75}
     port: ${REDIS_PORT:58379}
+
+hesperides.batch.migration.resources: ${MIGRATION_RESOURCES:technos,modules}
+legacy.uri: http://${LEGACY_HOST:localhost}:${LEGACY_PORT:8080}
+refonte.uri: http://${REFONTE_HOST:localhost}:${REFONTE_PORT:8081}
+
 event_store:
   host: ${EVENT_STORE_MONGO_HOST:localhost}
   port: ${EVENT_STORE_MONGO_PORT:27017}

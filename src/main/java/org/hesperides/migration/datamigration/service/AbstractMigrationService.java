@@ -16,7 +16,6 @@ import org.hesperides.migration.datamigration.token.Token;
 import org.hesperides.presentation.io.templatecontainers.ModelOutput;
 import org.hesperides.presentation.io.templatecontainers.PartialTemplateIO;
 import org.hesperides.presentation.io.templatecontainers.TemplateIO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
@@ -39,16 +38,16 @@ public abstract class AbstractMigrationService {
     RestTemplate legacyRestTemplate;
     RestTemplate refonteRestTemplate;
     MongoTokenRepository mongoTokenRepository;
-    @Autowired
     EmbeddedEventStore eventBus;
     Token token;
 
     AbstractMigrationService(RestTemplate restTemplate,
-                             ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, String legacyURI, String refonteURI) {
+                             ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, EmbeddedEventStore eventBus, String legacyURI, String refonteURI) {
         this.legacyRestTemplate = restTemplate;
         this.refonteRestTemplate = restTemplate;
         this.listOperations = listOperations;
         this.mongoTokenRepository = mongoTokenRepository;
+        this.eventBus = eventBus;
         this.LEGACY_URI = legacyURI;
         this.REFONTE_URI = refonteURI;
         refonteRestTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("tech", "password"));

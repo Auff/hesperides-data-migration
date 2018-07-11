@@ -1,9 +1,9 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 sudo: required
 service:
-  - docker
+- docker
 #cache:
 #  directories:
 #  - "$HOME/.m2"
@@ -14,7 +14,7 @@ stages:
 jobs:
   include:
   - stage: build
-    script: script: "./mvnw clean package -Dmaven.test.skip=true"
+    script: "./mvnw clean package -Dmaven.test.skip=true"
 #  - stage: docker
 #    if: branch = master AND fork = false
 #    script: "./.travis/docker_build_push.sh"

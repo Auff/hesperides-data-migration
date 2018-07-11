@@ -3,6 +3,7 @@ package org.hesperides.migration.datamigration.service;
 import lombok.extern.java.Log;
 import org.axonframework.commandhandling.model.ConcurrencyException;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
 import org.hesperides.domain.templatecontainers.entities.TemplateContainer;
 import org.hesperides.migration.datamigration.legacy.entities.LegacyEvent;
 import org.hesperides.migration.datamigration.legacy.events.modules.*;
@@ -37,9 +38,10 @@ public class ModuleMigrationService extends AbstractMigrationService {
 
     }
 
-    public ModuleMigrationService(RestTemplate restTemplate, ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, String legacyURI, String refonteURI) {
-        super(restTemplate, listOperations, mongoTokenRepository, legacyURI, refonteURI);
+    public ModuleMigrationService(RestTemplate restTemplate, ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, EmbeddedEventStore eventBus, String legacyURI, String refonteURI) {
+        super(restTemplate, listOperations, mongoTokenRepository, eventBus, legacyURI, refonteURI);
     }
+
 
     @Override
     protected void processOps() {
@@ -64,7 +66,7 @@ public class ModuleMigrationService extends AbstractMigrationService {
         }
     }
 
-    public Boolean checkModuleCreatedFirst(String key, LegacyEvent event) {
+    private Boolean checkModuleCreatedFirst(String key, LegacyEvent event) {
         Boolean ret = true;
         if (!"com.vsct.dt.hesperides.templating.modules.ModuleCreatedEvent".equals(event.getEventType())) {
             log.severe(key);

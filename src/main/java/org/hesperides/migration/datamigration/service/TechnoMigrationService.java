@@ -3,6 +3,7 @@ package org.hesperides.migration.datamigration.service;
 import lombok.extern.java.Log;
 import org.axonframework.eventhandling.GenericEventMessage;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
 import org.axonframework.messaging.MetaData;
 import org.hesperides.domain.security.User;
 import org.hesperides.domain.technos.TechnoCreatedEvent;
@@ -40,8 +41,8 @@ public class TechnoMigrationService extends AbstractMigrationService {
 
     }
 
-    public TechnoMigrationService(RestTemplate restTemplate, ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, String legacyURI, String refonteURI) {
-        super(restTemplate, listOperations, mongoTokenRepository, legacyURI, refonteURI);
+    public TechnoMigrationService(RestTemplate restTemplate, ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, EmbeddedEventStore eventBus, String legacyURI, String refonteURI) {
+        super(restTemplate, listOperations, mongoTokenRepository, eventBus, legacyURI, refonteURI);
     }
 
 

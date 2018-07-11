@@ -1,5 +1,6 @@
 package org.hesperides.migration.datamigration.service;
 
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
 import org.hesperides.domain.templatecontainers.entities.TemplateContainer;
 import org.hesperides.migration.datamigration.legacy.entities.LegacyEvent;
 import org.hesperides.migration.datamigration.token.MongoTokenRepository;
@@ -18,8 +19,8 @@ public class PlatformMigrationService extends AbstractMigrationService {
 
     }
 
-    public PlatformMigrationService(RestTemplate restTemplate, ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, String legacyURI, String refonteURI) {
-        super(restTemplate, listOperations, mongoTokenRepository, legacyURI, refonteURI);
+    public PlatformMigrationService(RestTemplate restTemplate, ListOperations<String, LegacyEvent> listOperations, MongoTokenRepository mongoTokenRepository, EmbeddedEventStore eventBus, String legacyURI, String refonteURI) {
+        super(restTemplate, listOperations, mongoTokenRepository, eventBus, legacyURI, refonteURI);
     }
 
 
